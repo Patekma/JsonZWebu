@@ -17,6 +17,7 @@ public class MainFrame extends JFrame {
 
         JButton btNacist = new JButton("Nacti");
         panel.add(btNacist);
+        btNacist.addActionListener((e -> nactiData()));
         JButton btGraf = new JButton("Nacti");
         panel.add(btGraf);
 
@@ -24,6 +25,16 @@ public class MainFrame extends JFrame {
         setVisible(true);
         //pres celou obrazovku(uz musi byt viditelne):
 //        setExtendedState(MAXIMIZED_BOTH);
+    }
+
+    private void nactiData() {
+        Nacti nacti = new Nacti();
+        try {
+            covidData = nacti.loadData();
+            model.fireTableDataChanged();
+        } catch (DataProviderException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private class CovidTableModel extends AbstractTableModel {
